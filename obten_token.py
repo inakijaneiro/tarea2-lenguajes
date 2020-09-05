@@ -27,7 +27,7 @@ ERR = 400  # Error léxico: palabra desconocida
 # Caso especial: Estado 200 = ERROR
 #        dig  char  (    )  raro  esp    #    "  \n   $   
 MT = [
-        [  2,   1, LRP, RRP,   5, ESP,   3,   4, CRT, END, ], # edo 0 - estado inicial
+        [  2,   1, LRP, RRP,   5,  0,   3,   4,    0, END, ], # edo 0 - estado inicial
         [  5,   1, SYM, SYM,   5, SYM, ERR, ERR, SYM, SYM, ], # edo 1 - simbolos
         [  2,   5, NUM, NUM,   5, NUM, ERR, ERR, NUM, NUM, ], # edo 2 - numeros
         [ERR, BOO, ERR, ERR, ERR ,ERR, ERR, ERR, ERR, BOO, ], # edo 3 - booleanos
@@ -118,7 +118,8 @@ def obten_token():
             return END
         else:   
             leer = False # el último caracter no es raro
-            print("ERROR! palabra ilegal", lexema)
+            print(">>ERROR LÉXICO<<", lexema)
+            sys.exit(1)
             return ERR
     
 

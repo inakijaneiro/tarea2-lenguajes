@@ -18,7 +18,7 @@ def match(tokenEsperado):
     if token == tokenEsperado:
         token = scanner.obten_token()
     else:
-        error("token equivocado")
+        error(">>ERROR SINTÁCTICO<<")
 
 # Función principal: implementa el análisis sintáctico
 def parser():
@@ -26,22 +26,24 @@ def parser():
     token = scanner.obten_token() # inicializa con el primer token
     prog()
     if token == scanner.END:
-        print("Expresion bien construida!!")
+        print(">>ENTRADA CORRECTA<<")
     else:
-        error("expresion mal terminada")
+        error(">>ERROR SINTÁCTICO<<")
 
 def prog():
+    print("No terminal <prog>")
     if token == scanner.LRP or token == scanner.SYM or token  == scanner.NUM or token == scanner.ESP or token == scanner.CRT or token == scanner.STR or token == scanner.BOO:
         exp()
         prog()
     elif token == scanner.END:
         return
     else:
-        error("Expresion mal iniciada!!!!")
+        error(">>ERROR SINTÁCTICO<<")
 
 
 # Módulo que reconoce expresiones
 def exp():
+    print("No terminal <exp>")
     if token == scanner.LRP:
         lista()
     elif token == scanner.ESP or token == scanner.CRT:
@@ -50,28 +52,32 @@ def exp():
         atomo()
 
 def atomo():
+    print("No terminal <atomo>")
     if token == scanner.SYM:
         match(token)
     else:
         constante()
 
 def constante():
+    print("No terminal <constante>")
     if token == scanner.BOO or token == scanner.STR or token == scanner.NUM:
         match(token)
 
 def elementos():
+    print("No terminal <elementos>")
     if  token != scanner.RRP and token != scanner.ERR:
         exp()
         elementos()
 
 def lista():
+    print("No terminal <lista>")
     match(scanner.LRP)
     elementos()
     match(scanner.RRP)
 
 # Termina con un mensaje de error
 def error(mensaje):
-    print("ERROR:", mensaje)
+    print(mensaje)
     sys.exit(1)
     
 parser()
