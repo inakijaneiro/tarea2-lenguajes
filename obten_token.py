@@ -4,6 +4,10 @@
 # Finito Determinista como una Matríz de Transiciones
 # Autor: Dr. Santiago Conant, Agosto 2014 (modificado en Agosto 2015)
 
+# Solución por:
+# Sergio Diosdado - A00516971
+# Iñaki Janeiro - A00516978
+
 import sys
 
 # tokens
@@ -18,8 +22,6 @@ ESP = 107  # Delimitador: Espacio
 CRT = 108  # Delimitador: Salto de linea
 ERR = 400  # Error léxico: palabra desconocida
 
-#h
-#t
 
 # Matriz de transiciones: codificación del AFD
 # [renglón, columna] = [estado no final, transición]
@@ -50,7 +52,7 @@ def filtro(c):
         return 3
     elif c == ' ': # blancos
         return 5
-    elif c == '#': # punto
+    elif c == '#': # booleano
         return 6
     elif c == '"': # quote string
         return 7
@@ -86,7 +88,7 @@ def obten_token():
             return NUM
         elif edo == BOO:   
             lexema += _c  # el último caracter forma el lexema
-            if _c == 't' or _c == 'f':
+            if _c == 't' or _c == 'f': # checa si es un booleano correcto
                 print("Booleano", lexema)
                 return BOO
             else:

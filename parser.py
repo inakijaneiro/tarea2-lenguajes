@@ -9,6 +9,10 @@
 #
 # Autor: Dr. Santiago Conant, Agosto 2014 (modificado Agosto 2015)
 
+# Solución por:
+# Sergio Diosdado - A00516971
+# Iñaki Janeiro - A00516978
+
 import sys
 import obten_token as scanner
 
@@ -30,9 +34,12 @@ def parser():
     else:
         error(">>ERROR SINTÁCTICO<<")
 
+# Parte principal y de arranque de la gramática
 def prog():
     print("No terminal <prog>")
-    if token == scanner.LRP or token == scanner.SYM or token  == scanner.NUM or token == scanner.ESP or token == scanner.CRT or token == scanner.STR or token == scanner.BOO:
+    if token == scanner.LRP or token == scanner.SYM or token  == scanner.NUM \
+        or token == scanner.ESP or token == scanner.CRT or token == scanner.STR \
+        or token == scanner.BOO:
         exp()
         prog()
     elif token == scanner.END:
@@ -51,6 +58,7 @@ def exp():
     else:
         atomo()
 
+# Mapa de la gramática que expresa una parte atómica de una expresión atomo -> SYMBOL | <lista>
 def atomo():
     print("No terminal <atomo>")
     if token == scanner.SYM:
@@ -58,17 +66,20 @@ def atomo():
     else:
         constante()
 
+# Mapa de la gramatica que se encarga de las literales. constante -> NUM | BOOL | STRING
 def constante():
     print("No terminal <constante>")
     if token == scanner.BOO or token == scanner.STR or token == scanner.NUM:
         match(token)
 
+# Mapa de la gramática elementos -> <exp> <elementos> | vacio
 def elementos():
     print("No terminal <elementos>")
-    if  token != scanner.RRP and token != scanner.ERR:
+    if  token != scanner.RRP and token != scanner.ERR and token != scanner.END:
         exp()
         elementos()
 
+# Detecta la secuencia de una lista - lista -> ( elementos )
 def lista():
     print("No terminal <lista>")
     match(scanner.LRP)
